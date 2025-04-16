@@ -6,7 +6,7 @@
 #    By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 16:42:35 by gdelhota          #+#    #+#              #
-#    Updated: 2025/04/14 20:11:43 by gdelhota         ###   ########.fr        #
+#    Updated: 2025/04/15 17:41:18 by gdelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,10 @@ INCLUDES_DIR = ./includes/
 MLX = ./minilibx-linux/
 LIBFT = ./libft/
 
-INCLUDES = -I $(INCLUDES_DIR) -I $(LIBFT) -I $(MLX)
+LDFLAGS := -L$(LIBFT) -L$(MLX)
+LDLIBS := -lft -lmlx -lm
+
+INCLUDES = -I$(INCLUDES_DIR) -I$(LIBFT) -I$(MLX)
 
 SRCS = so_long.c
 
@@ -35,16 +38,18 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(LFLAGS) $(INCLUDES) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
 
 all: $(NAME)
 
 clean:
 	$(MAKE) -C $(LIBFT) clean
+	$(MAKE) -C $(MLX) clean
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	$(MAKE) -C $(LIBFT) fclean
+	$(MAKE) -C $(MLX) fclean
 	rm -f $(NAME)
 
 re: fclean all
