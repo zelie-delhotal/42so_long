@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:49:42 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/14 20:12:13 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:06:45 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,7 @@
 
 #include "libft.h"
 #include "mlx.h"
+
+char	**map_parser(char *filename);
 
 #endif

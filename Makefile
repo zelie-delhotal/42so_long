@@ -6,7 +6,7 @@
 #    By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 16:42:35 by gdelhota          #+#    #+#              #
-#    Updated: 2025/04/15 17:41:18 by gdelhota         ###   ########.fr        #
+#    Updated: 2025/04/16 18:43:47 by gdelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ MLX = ./minilibx-linux/
 LIBFT = ./libft/
 
 LDFLAGS := -L$(LIBFT) -L$(MLX)
-LDLIBS := -lft -lmlx -lm
+LDLIBS := -lft -lmlx -lXext -lX11 -lm
 
 INCLUDES = -I$(INCLUDES_DIR) -I$(LIBFT) -I$(MLX)
 
-SRCS = so_long.c
+SRCS = so_long.c parser.c get_next_line.c get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJ_DIR),$(OBJS))
@@ -37,10 +37,14 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
+all: makelib $(NAME)
 
-all: $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
+
+makelib:
+	$(MAKE) -C $(LIBFT)
+	$(MAKE) -C $(MLX)
 
 clean:
 	$(MAKE) -C $(LIBFT) clean
@@ -49,7 +53,7 @@ clean:
 
 fclean: clean
 	$(MAKE) -C $(LIBFT) fclean
-	$(MAKE) -C $(MLX) fclean
+#	$(MAKE) -C $(MLX) fclean
 	rm -f $(NAME)
 
 re: fclean all
