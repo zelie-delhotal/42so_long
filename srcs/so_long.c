@@ -6,13 +6,13 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:01:51 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/16 17:07:37 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 18:28:13 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	void	*mlx;
 	void	*window;
