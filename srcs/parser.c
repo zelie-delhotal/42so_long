@@ -6,14 +6,14 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:05:16 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 18:54:07 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:40:53 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "parser.h"
 
-char	**expand_map(char ***map, char *line, int size)
+static char	**expand_map(char ***map, char *line, int size)
 {
 	char	**res;
 	int		i;
@@ -52,9 +52,11 @@ char	**map_parser(char *filename)
 		map = expand_map(&map, curr_line, i);
 		i++;
 	}
-	return (map);
+	if (map_is_valid(map))
+		return (map);
+	return (ft_free_all(map), NULL);
 }
-
+/*
 int	map_is_valid_rectangle(char **map)
 {
 	int	x;
@@ -109,3 +111,4 @@ int	map_is_valid(char **map)
 		return (0);
 	return (map_is_valid_rectangle(map) && valid_path_exists(map, start_pos));
 }
+*/

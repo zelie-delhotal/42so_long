@@ -6,7 +6,7 @@
 #    By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 16:42:35 by gdelhota          #+#    #+#              #
-#    Updated: 2025/04/16 18:43:47 by gdelhota         ###   ########.fr        #
+#    Updated: 2025/04/18 13:27:11 by gdelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ LDLIBS := -lft -lmlx -lXext -lX11 -lm
 
 INCLUDES = -I$(INCLUDES_DIR) -I$(LIBFT) -I$(MLX)
 
-SRCS = so_long.c parser.c get_next_line.c get_next_line_utils.c
+SRCS = so_long.c parser.c checker.c \
+	   get_next_line.c get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)
 OBJS := $(addprefix $(OBJ_DIR),$(OBJS))
