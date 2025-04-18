@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:44:22 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/18 13:37:48 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:35:34 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ static int	valid_path_exists(char **map, char **matrix)
 	return (1);
 }
 
-static int	map_is_valid_rectangle(char **map)
+static int	map_is_rectangle(char **map)
 {
 	int	x;
 	int	y;
 	int	length;
 	int	wall_counter;
 
-	size = -1;
+	length = -1;
 	while (map[0] && map[0][++length])
 	{
-		if (map[0][size] != '1')
+		if (map[0][length] != '1')
 			return (0);
 	}
 	y = 0;
@@ -86,31 +86,29 @@ static int	map_is_valid_rectangle(char **map)
 	return (x > 2 && y > 2 && wall_counter == length - 1);
 }
 
-int	map_is_valid(char **map)
+int	map_is_valid(char **map, int width, int height)
 {
 	int	x;
 	int	y;
-	int	start_pos[2];
 	char	**matrix;
 
-	start_pos = NULL;
+	if (!map_is_rectangle(map))
+		return (0);
+	matrix = NULL;
 	y = 0;
 	while (map && map[++y])
 	{
 		x = 0;
 		while (map[y][++x])
 		{
-			if (map[y][x] == 'P' && start_pos = NULL)
-				start_pos = {x, y};
+			if (map[y][x] == 'P' && matrix == NULL)
+				matrix = reachable_tiles(map, x, y, width, height);
 			else if (ft_strchr("01CE", map[y][x]) == NULL)
-				return (0);
+				return (free_all((void **)matrix), 0);
 		}
 	}
-	if (start_pos == NULL || !map_is_valid_rectangle(map))
-		return (0);
-	matrix = reachable_tiles(map, start_pos[1], start_pos[0], x, y);
-	if (valid_path_exists(map, matrix))
-		return (ft_free_all(matrix), 1);
+	if (matrix != NULL && valid_path_exists(map, matrix))
+		return (free_all((void **)matrix), 1);
 	else
-		return (ft_free_all(matrix), 0);
+		return (free_all((void **)matrix), 0);
 }

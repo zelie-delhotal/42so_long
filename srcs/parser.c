@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:05:16 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/18 13:40:53 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/18 16:34:54 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ char	**map_parser(char *filename)
 		map = expand_map(&map, curr_line, i);
 		i++;
 	}
-	if (map_is_valid(map))
+	if (map_is_valid(map, ft_strlen(map[0]), i))
 		return (map);
-	return (ft_free_all(map), NULL);
+	return (free_all((void**) map), NULL);
 }
 /*
 int	map_is_valid_rectangle(char **map)
