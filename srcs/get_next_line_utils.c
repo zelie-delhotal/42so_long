@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:26:35 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/16 18:36:44 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:26:30 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ char	*ft_strndup(char *s, int n)
 	char	*res;
 	int		i;
 
-	res = malloc(sizeof(char) * (n + 1));
+	res = ft_calloc((n + 1), sizeof(char));
 	if (!res)
 		return (NULL);
 	i = -1;
 	while (++i < n)
 		res[i] = s[i];
-	res[i] = '\0';
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:21:18 by gdelhota          #+#    #+#             */
-/*   Updated: 2024/11/28 07:35:22 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/19 15:57:48 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,17 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/*#include <stdio.h>
-#include <fcntl.h>
-int	main(int ac, char **av)
+char	*get_next_line_no_br(int fd)
 {
-	int fd = open("./txt", O_RDONLY);
-	int	i = -1;
-	int repeat = 1;
-	char *line;
-	if (ac > 1)
-		repeat = av[1][0] - '0';
-	while (++i < repeat)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-}*/
+	char	*res;
+	int		i;
+
+	res = get_next_line(fd);
+	if (res == NULL)
+		return (NULL);
+	i = 0;
+	while (res[i] != '\n')
+		i++;
+	res[i] = '\0';
+	return (res);
+}
