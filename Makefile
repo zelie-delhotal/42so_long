@@ -6,14 +6,14 @@
 #    By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 16:42:35 by gdelhota          #+#    #+#              #
-#    Updated: 2025/04/18 14:10:32 by gdelhota         ###   ########.fr        #
+#    Updated: 2025/04/19 18:19:39 by gdelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 SRC_DIR = ./srcs/
 OBJ_DIR = ./objs/
@@ -44,7 +44,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
 
 makelib:
-	@if [! -d "$(MLX)"]; then \
+	@if [ ! -d "$(MLX)" ] ; then \
 		git clone https://github.com/42paris/minilibx-linux.git $(MLX);\
 	fi
 	$(MAKE) -C $(MLX)
