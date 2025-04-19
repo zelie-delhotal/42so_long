@@ -6,12 +6,11 @@
 /*   By: gdelhota <gdelhota@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:44:22 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/19 18:47:35 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/19 19:50:54 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include <stdio.h>
 
 char	**reachable_tiles(char **map, int x, int y, int width, int height)
 {
@@ -45,11 +44,17 @@ void	reach_neighbors(char **map, int x, int y, int width, int height)
 	reachable_tiles(map, x, y - 1, width, height);
 }
 
-static int	valid_path_exists(char **map, char **matrix)
+static int	level_is_ok(char **map, char **matrix)
 {
 	int	x;
 	int	y;
+	int	collectible_count;
+	int	exit_count;
 
+	if (matrix == NULL)
+		return (0);
+	collectible_count = 0;
+	exit_count = 0;
 	y = 0;
 	while(map[++y])
 	{
@@ -58,9 +63,11 @@ static int	valid_path_exists(char **map, char **matrix)
 		{
 			if ((map[y][x] == 'E' || map[y][x] == 'C') && matrix[y][x] == 0)
 				return (0);
+			collectible_count += (map[y][x] == 'C');
+			exit_count += (map[y][x] == 'E');
 		}
 	}
-	return (1);
+	return (exit_count == 1 && collectible_count > 0);
 }
 
 static int	map_is_rectangle(char **map)
@@ -86,14 +93,14 @@ static int	map_is_rectangle(char **map)
 		if (x != length || map[y][0] != '1' || map[y][x - 1] != '1')
 			return (0);
 	}
-	//printf("x = %d y = %d walls = %d length = %d", x, y, wall_counter, length);
 	return (x > 2 && y > 2 && wall_counter == length);
 }
 
 int	map_is_valid(char **map, int width, int height)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	int		res;
 	char	**matrix;
 
 	if (!map_is_rectangle(map))
@@ -108,14 +115,9 @@ int	map_is_valid(char **map, int width, int height)
 			if (map[y][x] == 'P' && matrix == NULL)
 				matrix = reachable_tiles(map, x, y, width, height);
 			else if (ft_strchr("01CE", map[y][x]) == NULL)
-			{
-				write(2, "wrong chars\n", 12);
 				return (free_all((void **)matrix), 0);
-			}
 		}
 	}
-	if (matrix != NULL && valid_path_exists(map, matrix))
-		return (free_all((void **)matrix), 1);
-	else
-		return (free_all((void **)matrix), 0);
+	res = level_is_ok(map, matrix);
+	return (free_all((void **)matrix), res);
 }
