@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 01:40:54 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/23 19:16:36 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/23 23:25:30 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,47 @@ void	set_images(t_game *g)
 	int		width;
 	int		height;
 
-	i = malloc(5 * sizeof(void*));
-	i[BG] = mlx_xpm_file_to_image(g->mlx, "img/test_square.xpm", &g->tile_width, &g->tile_height);
-	i[WALL] = mlx_xpm_file_to_image(g->mlx, "img/depot.xpm", &width, &height);
-	i[PLAYER] = mlx_xpm_file_to_image(g->mlx, "img/depot.xpm", &width, &height);
-	i[EXIT] = mlx_xpm_file_to_image(g->mlx, "img/depot.xpm", &width, &height);
+	i = (void **) malloc(6 * sizeof(void *));
+	if (i == NULL)
+	{
+		game_close(g);
+		ft_error(1, "malloc aaah moment");
+	}
+	i[BG] = mlx_xpm_file_to_image(g->mlx, "img/bg.xpm", &g->tile_w, &g->tile_h);
+	i[WALL] = mlx_xpm_file_to_image(g->mlx, "img/wall.xpm", &width, &height);
+	i[PLAYER] = mlx_xpm_file_to_image(g->mlx, "img/p.xpm", &width, &height);
+	i[ITEM] = mlx_xpm_file_to_image(g->mlx, "img/c.xpm", &width, &height);
+	i[EXIT] = mlx_xpm_file_to_image(g->mlx, "img/e.xpm", &width, &height);
+	i[5] = NULL;
 	g->images = i;
 }
 
 t_game	*game_init(void *mlx, char **map)
 {
 	t_game	*game;
+	int		width;
+	int		height;
 
-	game = malloc(sizeof(t_game*));
+	game = malloc(sizeof(t_game));
 	game->mlx = mlx;
 	game->map = map;
-	game->window = mlx_new_window(game->mlx, 500, 500, "Logi Run");
 	set_images(game);
+	game->x_offset = 5;
+	game->y_offset = 5;
+	height = 0;
+	while (map[++height])
+	{
+		width = 1;
+		while (map[height][++width] && map[height][width] != 'P')
+			width++;
+		if (map[height][width] == 'P')
+			game->player_pos[0] = width;
+		if (map[height][width] == 'P')
+			game->player_pos[1] = height;
+	}
+	width = (ft_strlen(map[0]) * game->tile_w) + (2 * game->x_offset);
+	height = (height * game->tile_h) + (2 * game->y_offset);
+	game->window = mlx_new_window(game->mlx, width, height, "Logi Run");
 	return (game);
 }
 

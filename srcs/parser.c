@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:05:16 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/19 16:37:25 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/23 20:23:36 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char	**map_parser(char *filename)
 
 	i = ft_strlen(filename) - 4;
 	if (i < 1 || ft_strncmp(".ber", &filename[ft_strlen(filename) - 4], 4) != 0)
-		ft_error(1, "File format error");
+		ft_error(1, "Wrong file format");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		ft_error(1, "File open error");
+		ft_error(1, "Could not open file");
 	i = 0;
 	map = NULL;
 	curr_line = get_next_line_no_br(fd);

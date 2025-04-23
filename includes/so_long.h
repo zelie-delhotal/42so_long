@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:49:42 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/23 18:32:30 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:31:15 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 #include "libft.h"
 #include "mlx.h"
 
-typedef enum sprite_index
+typedef enum sprite
 {
-	BG, WALL, PLAYER, EXIT
-}	e_sprite_index;
+	BG, WALL, PLAYER, ITEM, EXIT
+}	e_sprite;
 
 typedef struct s_game
 {
 	void	*mlx;
 	void	*window;
 	void	**images;
-	int		tile_width;
-	int		tile_height;
+	int		tile_w;
+	int		tile_h;
+	int		x_offset;
+	int		y_offset;
 	int		player_pos[2];
 	char	**map;
 }			t_game;
