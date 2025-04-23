@@ -6,7 +6,7 @@
 #    By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 16:42:35 by gdelhota          #+#    #+#              #
-#    Updated: 2025/04/19 18:19:39 by gdelhota         ###   ########.fr        #
+#    Updated: 2025/04/21 03:06:02 by gdelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LDLIBS := -lft -lmlx -lXext -lX11 -lm
 INCLUDES = -I$(INCLUDES_DIR) -I$(LIBFT) -I$(MLX)
 
 SRCS = so_long.c parser.c checker.c \
+	   game_struct_utils.c \
 	   get_next_line.c get_next_line_utils.c
 
 OBJS = $(SRCS:.c=.o)

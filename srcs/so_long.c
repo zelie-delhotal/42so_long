@@ -6,18 +6,22 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:01:51 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/18 16:54:35 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:15:43 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/*void	draw_map(t_game *game, int tile_width, int tile_height)
+{
+	
+}*/
+
 int	main(int ac, char **av)
 {
-	void	*mlx;
-	void	*window;
-	void	*image;
+	t_game	*game;
 	char	**map;
+	void	*mlx;
 
 	if (ac < 2)
 		exit(1);
@@ -25,11 +29,8 @@ int	main(int ac, char **av)
 	if (map == NULL)
 		exit(0);
 	mlx = mlx_init();
-	int	width;
-	int	height;
-	image = mlx_xpm_file_to_image(mlx, "images/test_square.xpm", &width, &height);
-	window = mlx_new_window(mlx, 500, 500, "Logi Run");
-	mlx_put_image_to_window(mlx, window, image, 0 , 0);
-	mlx_put_image_to_window(mlx, window, image, 50 , 50);
+	game = game_init(mlx, map);
+	mlx_put_image_to_window(game->mlx, game->window, game->images[BG], 0 , 0);
+	mlx_put_image_to_window(game->mlx, game->window, game->images[PLAYER], 50 , 50);
 	mlx_loop(mlx);
 }
