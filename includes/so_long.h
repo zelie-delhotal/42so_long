@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:49:42 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/24 21:37:10 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/25 00:38:31 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef enum sprite
 {
-	BG, WALL, P, ITEM, EXIT
+	BG, WALL, P, ITEM, E_C, E_O
 }	e_sprite;
 
 typedef struct s_game
@@ -28,9 +28,11 @@ typedef struct s_game
 	void	**images;
 	int		tile_w;
 	int		tile_h;
-	int		x_offset;
-	int		y_offset;
-	int		player_pos[2];
+	int		player_x;
+	int		player_y;
+	int		collect_left;
+	int		exit_x;
+	int		exit_y;
 	char	**map;
 }			t_game;
 
