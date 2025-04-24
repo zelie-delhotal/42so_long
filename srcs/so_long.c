@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 19:01:51 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/25 00:40:19 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:51:13 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char **av)
 		exit(1);
 	map = map_parser(av[1]);
 	if (map == NULL)
-		exit(0);
+		ft_error(1, "Map Error");
 	mlx = mlx_init();
 	game = game_init(mlx, map);
 	game->map = map;

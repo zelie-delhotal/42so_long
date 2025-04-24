@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:05:16 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/24 20:42:25 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:50:28 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ char	**map_parser(char *filename)
 	map = expand_map(&map, NULL, i);
 	if (map_is_valid(map, ft_strlen(map[0]), i))
 		return (map);
-	ft_error(1, "Map Error");
-	return (NULL);
+	return (free_all((void **)map), NULL);
 }
