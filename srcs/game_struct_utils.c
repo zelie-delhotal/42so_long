@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 01:40:54 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/23 23:25:30 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/24 22:00:47 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	set_images(t_game *g)
 	}
 	i[BG] = mlx_xpm_file_to_image(g->mlx, "img/bg.xpm", &g->tile_w, &g->tile_h);
 	i[WALL] = mlx_xpm_file_to_image(g->mlx, "img/wall.xpm", &width, &height);
-	i[PLAYER] = mlx_xpm_file_to_image(g->mlx, "img/p.xpm", &width, &height);
+	i[P] = mlx_xpm_file_to_image(g->mlx, "img/p.xpm", &width, &height);
 	i[ITEM] = mlx_xpm_file_to_image(g->mlx, "img/c.xpm", &width, &height);
 	i[EXIT] = mlx_xpm_file_to_image(g->mlx, "img/e.xpm", &width, &height);
 	i[5] = NULL;
@@ -43,21 +43,19 @@ t_game	*game_init(void *mlx, char **map)
 	game->mlx = mlx;
 	game->map = map;
 	set_images(game);
-	game->x_offset = 5;
-	game->y_offset = 5;
 	height = 0;
 	while (map[++height])
 	{
 		width = 1;
-		while (map[height][++width] && map[height][width] != 'P')
+		while (map[height][width] && map[height][width] != 'P')
 			width++;
 		if (map[height][width] == 'P')
 			game->player_pos[0] = width;
 		if (map[height][width] == 'P')
 			game->player_pos[1] = height;
 	}
-	width = (ft_strlen(map[0]) * game->tile_w) + (2 * game->x_offset);
-	height = (height * game->tile_h) + (2 * game->y_offset);
+	width = (ft_strlen(map[0]) * game->tile_w) + 10;
+	height = (height * game->tile_h) + 10;
 	game->window = mlx_new_window(game->mlx, width, height, "Logi Run");
 	return (game);
 }
@@ -71,9 +69,10 @@ void	destroy_images(t_game *game)
 	i = -1;
 	while (game->images[++i] != NULL)
 		mlx_destroy_image(game->mlx, game->images[i]);
+	free(game->images);
 }
 
-void	game_close(t_game *game)
+int	game_close(t_game *game)
 {
 	if (game->window != NULL)
 	{
@@ -84,6 +83,10 @@ void	game_close(t_game *game)
 	if (game->map != NULL)
 		free_all((void **)game->map);
 	if (game->mlx != NULL)
+	{
 		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	free(game);
+	return (0);
 }
