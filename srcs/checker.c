@@ -6,62 +6,66 @@
 /*   By: gdelhota <gdelhota@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 12:44:22 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/19 19:50:54 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:27:27 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-char	**reachable_tiles(char **map, int x, int y, int width, int height)
+char	**reachable_tiles(char **map, int x, int y, int *map_size)
 {
-	static char	**matrix = NULL;
+	static char	**mat = NULL;
+	int			width;
+	int			height;
 	int			i;
 
-	if (matrix == NULL)
+	width = map_size[0];
+	height = map_size[1];
+	if (mat == NULL)
 	{
-		matrix = (char **) ft_calloc(height + 1, sizeof(char *));
+		mat = (char **) ft_calloc(height + 1, sizeof(char *));
 		i = -1;
 		while (++i < height)
-			matrix[i] = (char *) ft_calloc(width + 1, sizeof(char));
-		matrix[y][x] = '1';
-		reach_neighbors(map, x, y, width, height);
+			mat[i] = (char *) ft_calloc(width + 1, sizeof(char));
+		mat[y][x] = '1';
+		reach_neighbors(map, x, y, map_size);
 	}
-	if (x <= 0 || y <= 0 || x >= width || y >= height || matrix[y][x] == '1'
+	if (x <= 0 || y <= 0 || x >= width || y >= height || mat[y][x] == '1'
 			|| map[y][x] == '1')
-		return (matrix);
-	if ((matrix[y - 1][x] + matrix[y + 1][x] + matrix[y][x + 1] + matrix[y][x - 1]) != 0)
-		matrix[y][x] = '1';
-	if (matrix[y][x] == '1')
-		reach_neighbors(map, x, y, width, height);
-	return (matrix);
+		return (mat);
+	if ((mat[y - 1][x] + mat[y + 1][x] + mat[y][x + 1] + mat[y][x - 1]) != 0)
+		mat[y][x] = '1';
+	if (mat[y][x] == '1')
+		reach_neighbors(map, x, y, map_size);
+	return (mat);
 }
 
-void	reach_neighbors(char **map, int x, int y, int width, int height)
+void	reach_neighbors(char **map, int x, int y, int *map_size)
 {
-	reachable_tiles(map, x + 1, y, width, height);
-	reachable_tiles(map, x, y + 1, width, height);
-	reachable_tiles(map, x - 1, y, width, height);
-	reachable_tiles(map, x, y - 1, width, height);
+	reachable_tiles(map, x + 1, y, map_size);
+	reachable_tiles(map, x, y + 1, map_size);
+	reachable_tiles(map, x - 1, y, map_size);
+	reachable_tiles(map, x, y - 1, map_size);
 }
 
-static int	level_is_ok(char **map, char **matrix)
+static int	level_is_ok(char **map, char **mat)
 {
 	int	x;
 	int	y;
 	int	collectible_count;
 	int	exit_count;
 
-	if (matrix == NULL)
+	if (mat == NULL)
 		return (0);
 	collectible_count = 0;
 	exit_count = 0;
 	y = 0;
-	while(map[++y])
+	while (map[++y])
 	{
 		x = 0;
 		while (map[y][++x])
 		{
-			if ((map[y][x] == 'E' || map[y][x] == 'C') && matrix[y][x] == 0)
+			if ((map[y][x] == 'E' || map[y][x] == 'C') && mat[y][x] == 0)
 				return (0);
 			collectible_count += (map[y][x] == 'C');
 			exit_count += (map[y][x] == 'E');
@@ -101,23 +105,26 @@ int	map_is_valid(char **map, int width, int height)
 	int		x;
 	int		y;
 	int		res;
-	char	**matrix;
+	int		map_size[2];
+	char	**mat;
 
 	if (!map_is_rectangle(map))
 		return (0);
-	matrix = NULL;
+	mat = NULL;
+	map_size[0] = width;
+	map_size[1] = height;
 	y = 0;
 	while (map && map[++y])
 	{
 		x = 0;
 		while (map[y][++x])
 		{
-			if (map[y][x] == 'P' && matrix == NULL)
-				matrix = reachable_tiles(map, x, y, width, height);
+			if (map[y][x] == 'P' && mat == NULL)
+				mat = reachable_tiles(map, x, y, map_size);
 			else if (ft_strchr("01CE", map[y][x]) == NULL)
-				return (free_all((void **)matrix), 0);
+				return (free_all((void **)mat), 0);
 		}
 	}
-	res = level_is_ok(map, matrix);
-	return (free_all((void **)matrix), res);
+	res = level_is_ok(map, mat);
+	return (free_all((void **)mat), res);
 }

@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpigna      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 01:40:54 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/25 00:39:41 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/25 01:33:34 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	set_images(t_game *g)
 		game_close(g);
 		ft_error(1, "malloc aaah moment");
 	}
-	i[BG] = mlx_xpm_file_to_image(g->mlx, "img/wall.xpm", &g->tile_w, &g->tile_h);
+	i[BG] = mlx_xpm_file_to_image(g->mlx, "img/wall.xpm", &width, &height);
 	i[WALL] = mlx_xpm_file_to_image(g->mlx, "img/bg.xpm", &width, &height);
-	i[P] = mlx_xpm_file_to_image(g->mlx, "img/p.xpm", &width, &height);
+	i[P] = mlx_xpm_file_to_image(g->mlx, "img/p.xpm", &g->tile_w, &g->tile_h);
 	i[ITEM] = mlx_xpm_file_to_image(g->mlx, "img/c.xpm", &width, &height);
 	i[E_C] = mlx_xpm_file_to_image(g->mlx, "img/e_c.xpm", &width, &height);
 	i[E_O] = mlx_xpm_file_to_image(g->mlx, "img/e_o.xpm", &width, &height);
