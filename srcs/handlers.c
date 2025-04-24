@@ -6,7 +6,7 @@
 /*   By: gdelhota <gdelhota@student.42perpignan.fr  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 03:28:36 by gdelhota          #+#    #+#             */
-/*   Updated: 2025/04/24 21:32:20 by gdelhota         ###   ########.fr       */
+/*   Updated: 2025/04/24 22:18:56 by gdelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	player_move(t_game *game, char move)
 
 int	key_up(int key, t_game *game)
 {
-	if (key == 13)
+	if (key == 'w')
 		player_move(game, 'W');
-	if (key == 0)
+	if (key == 'a')
 		player_move(game, 'A');
-	if (key == 1)
+	if (key == 's')
 		player_move(game, 'S');
-	if (key == 2)
+	if (key == 'd')
 		player_move(game, 'D');
-	if (key == 53)
+	if (key == 65307)
 		mlx_loop_end(game->mlx);
 	return (0);
 }
